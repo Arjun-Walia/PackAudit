@@ -1,0 +1,18 @@
+{
+  "id": "lmpc.v2026_07",
+  "effective_from": "2026-07-01",
+  "gazettes": [
+    { "citation": "LMPC Rules 2011", "date": "2011-01-01" },
+    { "citation": "G.S.R. 629(E)", "date": "2017-06-23" },
+    { "citation": "G.S.R. 128(E)", "date": "2026-02-13" }
+  ],
+  "checks": [
+    "presence", "format_mrp", "format_usp", "table_i", "width",
+    "isolation", "contrast", "language", "listing_6_10", "listing_6_10a"
+  ],
+  "table_i": { "$comment": "see table_i.json — engine merges at load" },
+  "mrp_wording": {
+    "allowed_substrings": ["MRP", "inclusive of all taxes", "incl. of all taxes", "₹", "Rs.", "INR"]
+  },
+  "exceptions": []
+}

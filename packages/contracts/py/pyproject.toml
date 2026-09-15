@@ -1,0 +1,19 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "lmpc-contracts"
+version = "0.1.0"
+description = "Generated Pydantic models from JSON Schema / OpenAPI. Do not hand-edit generated modules."
+requires-python = ">=3.12,<3.13"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/lmpc_contracts"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

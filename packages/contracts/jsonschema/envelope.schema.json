@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lmpc.local/schema/envelope.schema.json",
+  "title": "Envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["success", "data", "error", "meta"],
+  "properties": {
+    "success": { "type": "boolean" },
+    "data": {},
+    "error": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["code", "message"],
+      "properties": {
+        "code": {
+          "type": "string",
+          "enum": [
+            "unauthorized", "forbidden", "validation", "not_found",
+            "conflict", "unsupported_media", "payload_too_large",
+            "job_failed", "rule_pack_invalid", "scale_unavailable"
+          ]
+        },
+        "message": { "type": "string" },
+        "details": { "type": ["object", "null"] }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["request_id"],
+      "properties": {
+        "request_id": { "type": "string" },
+        "warnings": { "type": "array", "items": { "type": "string" } },
+        "pagination": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "required": ["limit", "offset", "total"],
+          "properties": {
+            "limit": { "type": "integer" },
+            "offset": { "type": "integer" },
+            "total": { "type": "integer" }
+          }
+        }
+      }
+    }
+  }
+}

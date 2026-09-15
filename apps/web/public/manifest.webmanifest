@@ -1,0 +1,25 @@
+{
+  "name": "PackAudit",
+  "short_name": "PackAudit",
+  "description": "Inspection software that checks packaged-commodity labels against Legal Metrology rules.",
+  "start_url": "/inspect",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f8f6ee",
+  "theme_color": "#263e34",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

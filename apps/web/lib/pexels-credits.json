@@ -1,0 +1,34 @@
+﻿[
+    {
+        "id":  27939229,
+        "photographer":  "Allen Boguslavsky",
+        "photographer_url":  "https://www.pexels.com/@allen-boguslavsky-1344061",
+        "url":  "https://www.pexels.com/photo/a-shelf-with-snacks-and-snacks-on-it-27939229/",
+        "alt":  "Colorful snack packages neatly displayed in a supermarket aisle showcasing Asian food variety.",
+        "file":  "/media/pexels/27939229.jpg"
+    },
+    {
+        "id":  33395007,
+        "photographer":  "Diego Girón",
+        "photographer_url":  "https://www.pexels.com/@diego-giron-464799823",
+        "url":  "https://www.pexels.com/photo/various-snack-brands-displayed-on-shelves-33395007/",
+        "alt":  "Colorful assortment of snack bags displayed on a shelf, showcasing popular brands and flavors.",
+        "file":  "/media/pexels/33395007.jpg"
+    },
+    {
+        "id":  8476597,
+        "photographer":  "Kampus Production",
+        "photographer_url":  "https://www.pexels.com/@kampus",
+        "url":  "https://www.pexels.com/photo/person-carrying-grocery-basket-and-holding-mobile-phone-8476597/",
+        "alt":  "A man shops using a smartphone at a grocery store, holding a red basket filled with groceries.",
+        "file":  "/media/pexels/8476597.jpg"
+    },
+    {
+        "id":  9660911,
+        "photographer":  "Jonathan Cooper",
+        "photographer_url":  "https://www.pexels.com/@theshuttervision",
+        "url":  "https://www.pexels.com/photo/refreshing-drinks-on-plastic-bottles-9660911/",
+        "alt":  "Close-up of chai and bottled water in refrigerator, showcasing product labels.",
+        "file":  "/media/pexels/9660911.jpg"
+    }
+]

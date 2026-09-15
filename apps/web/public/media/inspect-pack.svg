@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 640" fill="none">
+  <defs>
+    <linearGradient id="body" x1="118" y1="240" x2="414" y2="290" gradientUnits="userSpaceOnUse"><stop stop-color="#bb611b"/><stop offset=".12" stop-color="#f4bc58"/><stop offset=".4" stop-color="#ffcf76"/><stop offset=".82" stop-color="#e8a443"/><stop offset="1" stop-color="#b26926"/></linearGradient>
+    <linearGradient id="fold" x1="120" y1="0" x2="400" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#a4652c"/><stop offset=".25" stop-color="#f5c67a"/><stop offset=".7" stop-color="#d58b3e"/><stop offset="1" stop-color="#91541e"/></linearGradient>
+    <linearGradient id="light" x1="140" y1="100" x2="290" y2="520" gradientUnits="userSpaceOnUse"><stop stop-color="white" stop-opacity=".32"/><stop offset="1" stop-color="white" stop-opacity="0"/></linearGradient>
+    <radialGradient id="bowl"><stop stop-color="#f9ebc6"/><stop offset=".77" stop-color="#e9d4a2"/><stop offset="1" stop-color="#f9f1db"/></radialGradient>
+    <filter id="shadow" x="0" y="0" width="520" height="640" filterUnits="userSpaceOnUse"><feDropShadow dx="12" dy="25" stdDeviation="18" flood-color="#653810" flood-opacity=".24"/></filter>
+    <pattern id="crimp" width="6" height="6" patternUnits="userSpaceOnUse"><path d="M1 0v6" stroke="#844c19" stroke-opacity=".32"/></pattern>
+    <pattern id="snack" width="38" height="33" patternUnits="userSpaceOnUse" patternTransform="rotate(12)"><path d="m3 5 13 4m5 13 13 1M8 22l4-9m17-8 3 9" stroke="#b97823" stroke-width="5" stroke-linecap="round"/><path d="m3 4 12 4m6 12 12 1M7 21l4-9m17-8 3 9" stroke="#edb74e" stroke-width="3" stroke-linecap="round"/></pattern>
+  </defs>
+  <ellipse cx="263" cy="584" rx="150" ry="20" fill="#754718" opacity=".13"/>
+  <g filter="url(#shadow)">
+    <path d="m137 66 251 0-11 62 27 383-7 57-270 0-13-54 33-386z" fill="url(#body)"/>
+    <path d="m137 66 251 0-4 28H141zM125 541h275l-3 27H127z" fill="url(#fold)"/>
+    <path d="m137 66 251 0-4 28H141zM125 541h275l-3 27H127z" fill="url(#crimp)"/>
+    <path d="m145 96 30 42-28 344-20 56 18-217 9-155z" fill="white" opacity=".16"/>
+    <path d="m375 94-19 49 23 351 19 46-11-215-17-162z" fill="#8e4c13" opacity=".14"/>
+    <path d="m145 113 225-10-15 247-208 50z" fill="url(#light)"/>
+    <path d="M144 305q115-49 244 0l9 144q-137-47-264 4z" fill="#235749"/>
+    <path d="M145 307q115-49 243 0" stroke="#fff0b9" stroke-width="3"/>
+    <g fill="#244f40" text-anchor="middle" font-family="Georgia,serif">
+      <path d="m261 132 5 9 10 2-7 8 1 10-9-5-9 5 1-10-7-8 10-2z" fill="#38614a"/>
+      <text x="262" y="189" font-size="33" letter-spacing="5">AANGAN</text>
+      <text x="262" y="213" font-family="Arial,sans-serif" font-size="9" letter-spacing="4">A LITTLE TASTE OF HOME</text>
+      <text x="262" y="263" font-size="29">Classic Namkeen</text>
+      <text x="262" y="289" font-size="17">क्लासिक नमकीन</text>
+    </g>
+    <ellipse cx="265" cy="377" rx="99" ry="56" fill="#163e30" opacity=".6"/>
+    <ellipse cx="260" cy="366" rx="100" ry="58" fill="url(#bowl)"/>
+    <ellipse cx="260" cy="363" rx="90" ry="47" fill="#c6913c"/>
+    <ellipse cx="260" cy="361" rx="90" ry="47" fill="url(#snack)"/>
+    <g fill="#d39946" stroke="#ad712a" stroke-width="1.5"><ellipse cx="227" cy="344" rx="8" ry="5" transform="rotate(24 227 344)"/><ellipse cx="280" cy="372" rx="9" ry="5" transform="rotate(-25 280 372)"/><ellipse cx="301" cy="345" rx="8" ry="5"/><ellipse cx="240" cy="391" rx="8" ry="5"/></g>
+    <path d="M305 415q32-29 49-13-16 24-49 13Z" fill="#86a954"/>
+    <path d="m307 415 41-10" stroke="#d3d892"/>
+    <g font-family="Arial,sans-serif" fill="#2d482f">
+      <text x="162" y="468" font-size="12" font-weight="700">NET QUANTITY 200 g</text>
+      <text x="162" y="490" font-size="12" font-weight="700">MRP ₹ 60.00</text>
+      <text x="162" y="505" font-size="8">INCLUSIVE OF ALL TAXES</text>
+      <text x="162" y="522" font-size="8" letter-spacing="1.5">CRAFTED IN INDIA</text>
+    </g>
+    <rect x="348" y="463" width="19" height="19" rx="1" stroke="#30673d" stroke-width="1.7"/><circle cx="357.5" cy="472.5" r="5.5" fill="#30673d"/>
+    <g stroke="#36462d"><path d="M333 498v25m3-25v25m4-25v25m6-25v25m2-25v25m4-25v25m5-25v25m3-25v25m5-25v25m3-25v25" stroke-width="2"/><path d="M338 498v25m6-25v25m10-25v25m9-25v25m8-25v25"/></g>
+  </g>
+</svg>

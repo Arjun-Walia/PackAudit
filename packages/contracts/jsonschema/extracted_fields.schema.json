@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lmpc.local/schema/extracted_fields.schema.json",
+  "title": "ExtractedFields",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "mrp", "net_qty", "usp", "packer", "importer", "coo", "date",
+    "consumer_care", "generic_name", "language", "listing_ui"
+  ],
+  "properties": {
+    "mrp": { "$ref": "#/$defs/moneyField" },
+    "net_qty": { "$ref": "#/$defs/qtyField" },
+    "usp": { "$ref": "#/$defs/uspField" },
+    "packer": { "$ref": "#/$defs/textField" },
+    "importer": { "$ref": "#/$defs/textField" },
+    "coo": { "$ref": "#/$defs/textField" },
+    "date": { "$ref": "#/$defs/dateField" },
+    "consumer_care": { "$ref": "#/$defs/careField" },
+    "generic_name": { "$ref": "#/$defs/textField" },
+    "language": { "$ref": "#/$defs/languageField" },
+    "listing_ui": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["coo_filter_present", "coo_filter_sortable", "confidence"],
+      "properties": {
+        "coo_filter_present": { "type": "boolean" },
+        "coo_filter_sortable": { "type": "boolean" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    }
+  },
+  "$defs": {
+    "bbox": {
+      "type": ["array", "null"],
+      "items": { "type": "number" },
+      "minItems": 4,
+      "maxItems": 4
+    },
+    "textField": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["present", "raw", "confidence"],
+      "properties": {
+        "present": { "type": "boolean" },
+        "raw": { "type": ["string", "null"] },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "bbox_px": { "$ref": "#/$defs/bbox" }
+      }
+    },
+    "moneyField": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["present", "raw", "confidence", "value_inr", "incl_all_taxes"],
+      "properties": {
+        "present": { "type": "boolean" },
+        "raw": { "type": ["string", "null"] },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "bbox_px": { "$ref": "#/$defs/bbox" },
+        "value_inr": { "type": ["number", "null"] },
+        "incl_all_taxes": { "type": ["boolean", "null"] }
+      }
+    },
+    "qtyField": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["present", "raw", "confidence", "value", "unit"],
+      "properties": {
+        "present": { "type": "boolean" },
+        "raw": { "type": ["string", "null"] },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "bbox_px": { "$ref": "#/$defs/bbox" },
+        "value": { "type": ["number", "null"] },
+        "unit": { "type": ["string", "null"], "enum": [null, "g", "kg", "ml", "l", "n"] }
+      }
+    },
+    "uspField": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["present", "raw", "confidence", "inr_per", "unit"],
+      "properties": {
+        "present": { "type": "boolean" },
+        "raw": { "type": ["string", "null"] },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "bbox_px": { "$ref": "#/$defs/bbox" },
+        "inr_per": { "type": ["number", "null"] },
+        "unit": { "type": ["string", "null"], "enum": [null, "g", "kg", "ml", "l"] }
+      }
+    },
+    "dateField": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["present", "raw", "confidence", "month", "year"],
+      "properties": {
+        "present": { "type": "boolean" },
+        "raw": { "type": ["string", "null"] },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "bbox_px": { "$ref": "#/$defs/bbox" },
+        "month": { "type": ["integer", "null"], "minimum": 1, "maximum": 12 },
+        "year": { "type": ["integer", "null"] }
+      }
+    },
+    "careField": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["present", "raw", "confidence", "phone", "email"],
+      "properties": {
+        "present": { "type": "boolean" },
+        "raw": { "type": ["string", "null"] },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "bbox_px": { "$ref": "#/$defs/bbox" },
+        "phone": { "type": ["string", "null"] },
+        "email": { "type": ["string", "null"] }
+      }
+    },
+    "languageField": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scripts", "present_hi_or_en", "confidence"],
+      "properties": {
+        "scripts": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["Deva", "Latn", "other"] }
+        },
+        "present_hi_or_en": { "type": "boolean" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    }
+  }
+}

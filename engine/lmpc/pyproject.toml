@@ -1,0 +1,19 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "lmpc-engine"
+version = "0.1.0"
+description = "Pure LMPC rule engine. Returns ProposedFinding[] with no persistence IDs."
+requires-python = ">=3.12,<3.13"
+dependencies = ["pydantic>=2.8"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/lmpc_engine"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

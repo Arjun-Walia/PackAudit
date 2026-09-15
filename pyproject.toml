@@ -1,0 +1,23 @@
+[project]
+name = "lmpc-inspect"
+version = "0.1.0"
+description = "LMPC Inspect — officer-grade Legal Metrology inspection (SIH26034)"
+requires-python = ">=3.12,<3.13"
+dependencies = []
+
+[tool.uv.workspace]
+members = [
+  "engine/lmpc",
+  "services/api",
+  "workers/vision",
+  "workers/reports",
+  "packages/contracts/py",
+  "packages/db",
+]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"

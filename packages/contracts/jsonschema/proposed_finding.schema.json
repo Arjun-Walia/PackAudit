@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lmpc.local/schema/proposed_finding.schema.json",
+  "title": "ProposedFinding",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "rule_id", "clause", "gazette", "status", "severity",
+    "summary", "confidence", "target_field", "metrics"
+  ],
+  "properties": {
+    "rule_id": { "type": "string", "pattern": "^lmpc\\.[a-z0-9_.]+$" },
+    "clause": { "type": "string", "minLength": 3 },
+    "gazette": { "type": "string", "minLength": 3 },
+    "status": { "type": "string", "enum": ["proposed", "skipped_exception"] },
+    "severity": { "type": "string", "enum": ["critical", "major", "minor"] },
+    "summary": { "type": "string" },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "target_field": {
+      "type": ["string", "null"],
+      "enum": [
+        null, "mrp", "net_qty", "usp", "packer", "importer",
+        "coo", "date", "consumer_care", "generic_name",
+        "language", "pdp", "listing"
+      ]
+    },
+    "metrics": { "$ref": "https://lmpc.local/schema/finding.schema.json#/$defs/metrics" },
+    "evidence_bbox_px": {
+      "type": ["array", "null"],
+      "items": { "type": "number" },
+      "minItems": 4,
+      "maxItems": 4
+    }
+  }
+}

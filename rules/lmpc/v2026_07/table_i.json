@@ -1,0 +1,27 @@
+{
+  "rule_id": "lmpc.r7.table_i",
+  "clause": "Rule 7(2) read with Table I",
+  "gazette": "G.S.R. 629(E) dated 23.06.2017",
+  "applies_to": ["mrp", "net_qty", "usp"],
+  "width_rule": {
+    "rule_id": "lmpc.r7.width",
+    "clause": "Rule 7(3)",
+    "min_width_over_height": 0.333333,
+    "exceptions_glyphs": ["1", "i", "I", "l"]
+  },
+  "rows": [
+    { "sl": 1, "pdp_area_cm2": { "min": 0, "max_exclusive": 50 }, "min_height_print_mm": 1.0, "min_height_blown_mm": 1.5, "severity": "major" },
+    { "sl": 2, "pdp_area_cm2": { "min": 50, "max_exclusive": 100 }, "min_height_print_mm": 1.5, "min_height_blown_mm": 3.0, "severity": "major" },
+    { "sl": 3, "pdp_area_cm2": { "min": 100, "max_exclusive": 500 }, "min_height_print_mm": 2.5, "min_height_blown_mm": 4.0, "severity": "major" },
+    { "sl": 4, "pdp_area_cm2": { "min": 500, "max_exclusive": 2500 }, "min_height_print_mm": 4.0, "min_height_blown_mm": 6.0, "severity": "major" },
+    { "sl": 5, "pdp_area_cm2": { "min": 2500, "max_exclusive": null }, "min_height_print_mm": 6.0, "min_height_blown_mm": 6.0, "severity": "major" }
+  ],
+  "pdp_geometry": {
+    "rectangular": "height_cm * width_cm of PDP face",
+    "cylindrical": "0.40 * height_cm * circumference_cm excluding top, bottom, neck"
+  },
+  "uncertainty_policy": {
+    "fail_only_if": "measured_mm + uncertainty_mm < required_mm",
+    "else": "metrics.band = within_uncertainty"
+  }
+}

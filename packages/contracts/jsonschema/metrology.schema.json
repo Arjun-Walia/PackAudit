@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lmpc.local/schema/metrology.schema.json",
+  "title": "MetrologyResult",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "mm_per_px", "scale_method", "uncertainty_rel",
+    "pdp_area_cm2", "pdp_area_uncertainty_cm2", "print_vs_blown", "targets"
+  ],
+  "properties": {
+    "mm_per_px": { "type": "number", "exclusiveMinimum": 0 },
+    "scale_method": {
+      "type": "string",
+      "enum": ["ean13_module", "upc_module", "coin", "pack_height", "fixture"]
+    },
+    "uncertainty_rel": { "type": "number", "minimum": 0 },
+    "pdp_area_cm2": { "type": "number", "minimum": 0 },
+    "pdp_area_uncertainty_cm2": { "type": "number", "minimum": 0 },
+    "print_vs_blown": { "type": "string", "enum": ["print", "blown"] },
+    "targets": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "mrp": { "$ref": "#/$defs/glyph" },
+        "net_qty": { "$ref": "#/$defs/glyph" },
+        "usp": { "$ref": "#/$defs/glyph" }
+      }
+    }
+  },
+  "$defs": {
+    "glyph": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "height_mm", "height_uncertainty_mm",
+        "width_mm", "width_uncertainty_mm",
+        "isolation_mm", "contrast_ratio", "bbox_px"
+      ],
+      "properties": {
+        "height_mm": { "type": "number" },
+        "height_uncertainty_mm": { "type": "number", "minimum": 0 },
+        "width_mm": { "type": "number" },
+        "width_uncertainty_mm": { "type": "number", "minimum": 0 },
+        "isolation_mm": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["top", "bottom", "left", "right"],
+          "properties": {
+            "top": { "type": "number" },
+            "bottom": { "type": "number" },
+            "left": { "type": "number" },
+            "right": { "type": "number" }
+          }
+        },
+        "contrast_ratio": { "type": "number", "minimum": 0 },
+        "bbox_px": {
+          "type": "array",
+          "items": { "type": "number" },
+          "minItems": 4,
+          "maxItems": 4
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lmpc.local/schema/finding.schema.json",
+  "title": "Finding",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id", "rule_id", "clause", "gazette", "status", "severity",
+    "summary", "confidence", "officer_decision", "target_field",
+    "metrics", "evidence_crop"
+  ],
+  "properties": {
+    "id": { "type": "string", "format": "uuid" },
+    "rule_id": { "type": "string", "pattern": "^lmpc\\.[a-z0-9_.]+$" },
+    "clause": { "type": "string", "minLength": 3 },
+    "gazette": { "type": "string", "minLength": 3 },
+    "status": { "type": "string", "enum": ["proposed", "skipped_exception"] },
+    "severity": { "type": "string", "enum": ["critical", "major", "minor"] },
+    "summary": { "type": "string" },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "officer_decision": {
+      "type": "string",
+      "enum": ["pending", "accepted", "rejected", "annotated"]
+    },
+    "target_field": {
+      "type": ["string", "null"],
+      "enum": [
+        null, "mrp", "net_qty", "usp", "packer", "importer",
+        "coo", "date", "consumer_care", "generic_name",
+        "language", "pdp", "listing"
+      ]
+    },
+    "metrics": { "$ref": "#/$defs/metrics" },
+    "evidence_crop": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["object_key", "bbox_px"],
+      "properties": {
+        "object_key": { "type": "string" },
+        "bbox_px": {
+          "type": "array",
+          "items": { "type": "number" },
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "url": { "type": "string", "format": "uri" }
+      }
+    },
+    "overlay_key": { "type": ["string", "null"] }
+  },
+  "$defs": {
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "measured_mm": { "type": "number" },
+        "required_mm": { "type": "number" },
+        "uncertainty_mm": { "type": "number" },
+        "pdp_area_cm2": { "type": "number" },
+        "table_i_sl": { "type": "integer" },
+        "print_vs_blown": { "type": "string", "enum": ["print", "blown"] },
+        "band": { "type": "string", "enum": ["fail", "within_uncertainty", "pass"] },
+        "width_over_height": { "type": "number" },
+        "min_width_over_height": { "type": "number" },
+        "contrast_ratio": { "type": "number" },
+        "min_contrast_ratio": { "type": "number" },
+        "isolation_mm": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "top": { "type": "number" },
+            "bottom": { "type": "number" },
+            "left": { "type": "number" },
+            "right": { "type": "number" }
+          }
+        },
+        "exception_id": { "type": "string" },
+        "barcode_mismatch": { "type": "boolean" },
+        "listing_coo_filter_present": { "type": "boolean" },
+        "pack_value": { "type": ["string", "number", "null"] },
+        "listing_value": { "type": ["string", "number", "null"] }
+      }
+    }
+  }
+}

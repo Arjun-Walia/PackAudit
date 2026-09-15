@@ -1,0 +1,12 @@
+[
+  {
+    "id": "industrial_institutional",
+    "skips_rule_ids": ["lmpc.r6.1.mrp"],
+    "when": { "pack_kind": "industrial" }
+  },
+  {
+    "id": "over_25kg_or_l",
+    "skips_rule_ids": ["lmpc.r6.usp"],
+    "when": { "net_qty_over": { "kg": 25, "l": 25 } }
+  }
+]

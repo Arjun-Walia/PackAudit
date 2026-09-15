@@ -1,0 +1,202 @@
+openapi: 3.1.0
+info:
+  title: LMPC Inspect API
+  version: 0.1.0
+  description: Officer-grade LMPC inspection. Model proposes; officer signs.
+servers:
+  - url: /v1
+    description: Same-origin rewrite from apps/web
+tags:
+  - name: auth
+  - name: inspections
+  - name: jobs
+  - name: reports
+  - name: dashboard
+    x-feature-flag: FEATURE_DASHBOARD
+  - name: listings
+    x-feature-flag: FEATURE_LISTINGS
+paths:
+  /auth/login:
+    post:
+      tags: [auth]
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              additionalProperties: false
+              properties:
+                email: { type: string, format: email }
+                password: { type: string }
+      responses:
+        "200":
+          description: Envelope + Set-Cookie lmpc_access
+  /auth/logout:
+    post:
+      tags: [auth]
+      operationId: logout
+      responses:
+        "204": { description: Cookie cleared }
+  /inspections:
+    get:
+      tags: [inspections]
+      operationId: listInspections
+      parameters:
+        - in: query
+          name: gtin
+          schema: { type: string }
+        - in: query
+          name: status
+          schema: { type: string }
+        - in: query
+          name: limit
+          schema: { type: integer, default: 20 }
+        - in: query
+          name: offset
+          schema: { type: integer, default: 0 }
+      responses:
+        "200": { description: Envelope list }
+    post:
+      tags: [inspections]
+      operationId: createInspection
+      responses:
+        "201": { description: Envelope inspection }
+  /inspections/{id}:
+    get:
+      tags: [inspections]
+      operationId: getInspection
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200": { description: Envelope inspection with fields, metrology, findings }
+  /inspections/{id}/faces:
+    post:
+      tags: [inspections]
+      operationId: uploadFace
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [face, file]
+              properties:
+                face:
+                  type: string
+                  enum: [pdp, back, side, neck, listing, annexure]
+                file: { type: string, format: binary }
+                client_sha256: { type: string }
+                captured_at: { type: string, format: date-time }
+      responses:
+        "201": { description: Envelope face }
+  /inspections/{id}/scale-hints:
+    patch:
+      tags: [inspections]
+      operationId: patchScaleHints
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200": { description: Envelope }
+  /inspections/{id}/barcode:
+    post:
+      tags: [inspections]
+      operationId: submitBarcode
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200": { description: Envelope }
+  /inspections/{id}/analyze:
+    post:
+      tags: [inspections]
+      operationId: analyzeInspection
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "202": { description: Enqueued vision_fast }
+        "409": { description: Vision job already running }
+  /inspections/{id}/findings/{finding_id}/decision:
+    post:
+      tags: [inspections]
+      operationId: decideFinding
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+        - in: path
+          name: finding_id
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200": { description: Envelope }
+  /inspections/{id}/report:
+    post:
+      tags: [reports]
+      operationId: enqueueReport
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "202": { description: Enqueued report }
+        "409": { description: No accepted findings }
+    get:
+      tags: [reports]
+      operationId: getReport
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200": { description: Envelope report metadata }
+  /jobs/{job_id}:
+    get:
+      tags: [jobs]
+      operationId: getJob
+      parameters:
+        - in: path
+          name: job_id
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200": { description: Envelope job + steps }
+  /evidence/{id}:
+    get:
+      tags: [inspections]
+      operationId: getEvidence
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200": { description: Bytes; RBAC + audit }
+  /dashboard/summary:
+    get:
+      tags: [dashboard]
+      operationId: dashboardSummary
+      x-feature-flag: FEATURE_DASHBOARD
+      responses:
+        "200": { description: Envelope KPIs }

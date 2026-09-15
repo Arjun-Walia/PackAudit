@@ -1,0 +1,13 @@
+{
+  "name": "lmpc-inspect",
+  "private": true,
+  "packageManager": "pnpm@9.12.3",
+  "engines": {
+    "node": ">=22 <23"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @lmpc/web dev",
+    "build": "pnpm --filter @lmpc/web build",
+    "lint": "pnpm -r lint"
+  }
+}

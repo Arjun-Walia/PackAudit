@@ -1,0 +1,19 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "lmpc-vision"
+version = "0.1.0"
+description = "ARQ vision worker. max_jobs=1. Calls lmpc_db only — never lmpc_api."
+requires-python = ">=3.12,<3.13"
+dependencies = ["arq>=0.26", "redis>=5.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/lmpc_vision"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

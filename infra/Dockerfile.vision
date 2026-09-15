@@ -1,0 +1,12 @@
+FROM python:3.12-slim-bookworm
+WORKDIR /app
+RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/*
+# PR-06b: COPY baked PP-OCRv4 + Indic weights into /models
+COPY packages/contracts/py packages/contracts/py
+COPY packages/db packages/db
+COPY engine/lmpc engine/lmpc
+COPY workers/vision workers/vision
+RUN pip install --no-cache-dir ./packages/contracts/py ./packages/db ./engine/lmpc ./workers/vision
+EXPOSE 8081
+ENV DEVICE=cpu VISION_BACKEND=canned
+CMD ["python", "-m", "lmpc_vision.worker"]

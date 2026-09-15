@@ -1,0 +1,19 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "lmpc-api"
+version = "0.1.0"
+description = "FastAPI modular monolith. Serves packages/contracts/openapi/openapi.yaml."
+requires-python = ">=3.12,<3.13"
+dependencies = ["fastapi>=0.115", "uvicorn[standard]>=0.30", "pydantic-settings>=2.4", "pyyaml>=6.0", "python-multipart>=0.0.9", "redis>=5.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/lmpc_api"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

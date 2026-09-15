@@ -1,0 +1,19 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "lmpc-reports"
+version = "0.1.0"
+description = "ARQ report worker. PDF iff ≥1 accepted finding."
+requires-python = ">=3.12,<3.13"
+dependencies = ["arq>=0.26", "weasyprint>=62"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/lmpc_reports"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

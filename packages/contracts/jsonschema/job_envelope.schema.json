@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lmpc.local/schema/job_envelope.schema.json",
+  "title": "JobEnvelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "job_id", "kind", "inspection_id", "tenant_id", "rule_pack_id",
+    "as_of", "resume_from", "flags", "model_id", "engine_version",
+    "faces", "scale_hints"
+  ],
+  "properties": {
+    "job_id": { "type": "string", "format": "uuid" },
+    "kind": { "type": "string", "enum": ["vision_fast", "vision_full", "report"] },
+    "inspection_id": { "type": "string", "format": "uuid" },
+    "tenant_id": { "type": "string", "format": "uuid" },
+    "rule_pack_id": { "type": "string" },
+    "as_of": { "type": "string", "format": "date" },
+    "resume_from": { "type": ["string", "null"] },
+    "face_filter": {
+      "type": ["string", "null"],
+      "enum": [null, "pdp", "back", "side", "neck", "listing"]
+    },
+    "use_canned_fixture": { "type": ["string", "null"] },
+    "flags": { "type": "object" },
+    "model_id": { "type": "string" },
+    "engine_version": { "type": "string" },
+    "faces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["face_id", "face", "raw_key", "sha256"],
+        "properties": {
+          "face_id": { "type": "string", "format": "uuid" },
+          "face": {
+            "type": "string",
+            "enum": ["pdp", "back", "side", "neck", "listing", "annexure"]
+          },
+          "raw_key": { "type": "string" },
+          "sha256": { "type": "string" }
+        }
+      }
+    },
+    "scale_hints": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "coin_mm": { "type": ["number", "null"] },
+        "pack_height_mm": { "type": ["number", "null"] },
+        "barcode_value": { "type": ["string", "null"] }
+      }
+    }
+  }
+}
