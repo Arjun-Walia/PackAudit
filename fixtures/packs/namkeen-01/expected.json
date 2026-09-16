@@ -1,0 +1,20 @@
+[
+  {
+    "rule_id": "lmpc.r7.table_i",
+    "clause": "Rule 7(2) read with Table I",
+    "gazette": "G.S.R. 629(E) dated 23.06.2017",
+    "status": "proposed",
+    "severity": "major",
+    "summary": "MRP numeral height 1.8 ± 0.2 mm is below mandatory 2.5 mm threshold for PDP area 120 cm² under Rule 7 Table I (Row 3).",
+    "confidence": 0.96,
+    "target_field": "mrp",
+    "metrics": {
+      "measured_mm": 1.8,
+      "required_mm": 2.5,
+      "pdp_area_cm2": 120.0,
+      "uncertainty_mm": 0.2,
+      "band": "fail"
+    },
+    "evidence_bbox_px": [120, 340, 180, 520]
+  }
+]

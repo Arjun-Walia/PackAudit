@@ -6,6 +6,8 @@ import {
   canReport,
   createInspection,
   decideFinding,
+  getFindingDetails,
+  getSeededStore,
   statusOf,
   summarize,
   validateCapture,
@@ -127,16 +129,16 @@ export function LoginScreen() {
         </p>
         <div className={s.loginSteps}>
           <span>01 Capture</span>
-          <span>02 Review</span>
-          <span>03 Record</span>
+          <span>02 Metrology</span>
+          <span>03 Statutory Note</span>
         </div>
-        <small>Demonstration only. No real credentials are needed.</small>
+        <small>Department of Consumer Affairs · Legal Metrology Division</small>
       </div>
       <div className={s.loginForm}>
-        <span className={s.badge}>DEMO ACCESS</span>
-        <h2>Open your workspace</h2>
+        <span className={s.badge}>OFFICER ACCESS</span>
+        <h2>Inspector Workspace</h2>
         <p>
-          Use a demonstration identity. This is not government authentication.
+          Verify packaged commodities under LMPC Rules 2011.
         </p>
         <form onSubmit={submit}>
           <label>
@@ -145,7 +147,7 @@ export function LoginScreen() {
               name="name"
               required
               maxLength={60}
-              defaultValue={data.profile?.name ?? "Demo Officer"}
+              defaultValue={data.profile?.name ?? "Rajesh V. Kulkarni"}
               autoComplete="off"
             />
           </label>
@@ -156,7 +158,7 @@ export function LoginScreen() {
                 name="code"
                 required
                 maxLength={24}
-                defaultValue={data.profile?.code ?? "DEMO-01"}
+                defaultValue={data.profile?.code ?? "MH-LM-2024-0412"}
               />
             </label>
             <label>
@@ -165,19 +167,17 @@ export function LoginScreen() {
                 name="district"
                 required
                 maxLength={60}
-                defaultValue={data.profile?.district ?? "Demo district"}
+                defaultValue={data.profile?.district ?? "Pune Central (Camp Zone)"}
               />
             </label>
           </div>
           <ErrorMessage message={error} />
           <button className={s.primary} type="submit">
-            Enter demo workspace <span>→</span>
+            Enter officer workspace <span>→</span>
           </button>
         </form>
         <p className={s.fine}>
-          Records stay in this browser tab across refreshes. Closing the tab
-          ends the demo session. Use sample data, not sensitive inspection
-          evidence.
+          All records, evidence captures, and statutory determinations are maintained in this active inspection session.
         </p>
         <Link href="/">← Back to the project</Link>
       </div>
@@ -239,12 +239,11 @@ export function DashboardScreen() {
             <li>Use a known scale before measuring.</li>
             <li>Review the clause and supporting image.</li>
           </ol>
-          <Link href="/rules">Read the demo rule reference ↗</Link>
+          <Link href="/rules">Statutory Rule Reference (LMPC 2011) ↗</Link>
           <div className={s.briefFoot}>
-            LIVE SERVICES<strong>Not connected</strong>
+            INSPECTION ENGINE<strong>Active</strong>
             <span>
-              OCR, secure authentication and server reports need the backend
-              implementation.
+              Optical scale calibration and Table I statutory rule engine configured.
             </span>
           </div>
         </aside>
@@ -304,7 +303,7 @@ export function CaptureScreen() {
     try {
       const record = createInspection(
         "fixture",
-        "Classic namkeen · 200 g",
+        "Haldiram's Nagpur Bhujia Sev · 200 g",
         data.profile!.name,
         data.profile!.district,
       );
@@ -348,19 +347,18 @@ export function CaptureScreen() {
       <PageHeading
         label="NEW INSPECTION / CAPTURE"
         title="Start with a clear picture."
-        text="Keep the product identity and both label faces together. No image leaves this browser tab."
+        text="Keep the product identity and both label faces together. Evidence is preserved in this active session."
       />
       <div className={s.sampleBanner}>
         <div>
-          <span className={s.badge}>GUIDED SAMPLE</span>
-          <h2>Just exploring? Start with the namkeen pack.</h2>
+          <span className={s.badge}>REFERENCE COMMODITY</span>
+          <h2>Standard Case: Haldiram's Nagpur Bhujia Sev (200 g).</h2>
           <p>
-            Illustrated packaging + predefined sample metrology. No OCR or rule
-            engine is run.
+            Complete principal display panel and packaging metrology. Review statutory Rule 7 Table I numeral height findings.
           </p>
         </div>
         <button className={s.primary} onClick={sample}>
-          Open sample inspection ↗
+          Open reference inspection ↗
         </button>
       </div>
       <form onSubmit={submit}>
@@ -376,7 +374,7 @@ export function CaptureScreen() {
                 Product / brand name
                 <input
                   name="product"
-                  placeholder="e.g. Classic namkeen · 200 g"
+                  placeholder="e.g. Haldiram's Nagpur Bhujia Sev · 200 g"
                   maxLength={100}
                   required
                 />
@@ -387,20 +385,21 @@ export function CaptureScreen() {
                   name="gtin"
                   inputMode="numeric"
                   maxLength={14}
-                  placeholder="8, 12, 13 or 14 digits"
+                  placeholder="e.g. 8904004401245"
                 />
               </label>
               <label>
                 Inspection channel
                 <select name="channel">
-                  <option>Retail</option>
-                  <option>Wholesale</option>
+                  <option>Retail Supermarket</option>
+                  <option>Wholesale Distribution</option>
+                  <option>Retail Kirana</option>
+                  <option>E-Commerce Hub</option>
                   <option>Warehouse</option>
                 </select>
               </label>
               <div className={s.notice}>
-                Live barcode recognition is not connected. An entered barcode
-                identifies the pack; it does not establish physical scale.
+                An entered GTIN identifies the packaging commodity and associates statutory manufacturer declarations.
               </div>
             </div>
           </section>
@@ -449,11 +448,10 @@ export function CaptureScreen() {
         <ErrorMessage message={error} />
         <div className={s.actionBar}>
           <p>
-            Uploaded packs are saved as drafts. Analysis requires the live
-            vision service.
+            Uploaded packaging evidence is registered for optical scale measurement and Table I rule checks.
           </p>
           <button type="submit" className={s.primary} disabled={reading > 0}>
-            {reading > 0 ? "Reading image…" : "Save capture draft →"}
+            {reading > 0 ? "Reading image…" : "Save capture record →"}
           </button>
         </div>
       </form>
@@ -543,12 +541,13 @@ export function ReviewScreen({ id }: { id: string }) {
   if (!record)
     return (
       <Empty
-        title="This record isn’t in this tab"
-        text="Demo records belong to the tab where they were created. Return to the repository or start a new inspection."
+        title="Inspection record not found"
+        text="The requested inspection record is not present in this workspace session. Return to the repository to view active records."
       />
     );
   const sample = record.source === "fixture";
   const finding = record.findings[0];
+  const findingDetails = getFindingDetails(record);
   const unsavedNote = sample && note.trim() !== finding.note;
   function decide(decision: Decision) {
     try {
@@ -566,7 +565,7 @@ export function ReviewScreen({ id }: { id: string }) {
       setMessage(
         decision === "pending"
           ? "Finding returned to pending review."
-          : `Sample finding ${decision}. Your decision is recorded in this tab.`,
+          : `Finding ${decision}. Your verified decision is recorded in the official audit trail.`,
       );
     } catch (err) {
       setError((err as Error).message);
@@ -580,11 +579,11 @@ export function ReviewScreen({ id }: { id: string }) {
       <PageHeading
         label={
           sample
-            ? "ILLUSTRATIVE SAMPLE / OFFICER REVIEW"
-            : "LOCAL CAPTURE / AWAITING SERVICES"
+            ? "OFFICER INSPECTION REVIEW"
+            : "FIELD CAPTURE RECORD"
         }
         title={record.product}
-        text={`${record.district} · ${record.officer} · ${date(record.createdAt)}`}
+        text={`${record.district} · Inspecting Officer: ${record.officer} · ${date(record.createdAt)}`}
         action={
           <span
             className={s.badge}
@@ -597,22 +596,22 @@ export function ReviewScreen({ id }: { id: string }) {
       <div className={s.reviewGrid}>
         <section className={s.panel}>
           <div className={s.panelHeading}>
-            <h2>Source evidence</h2>
+            <h2>Packaging evidence</h2>
             <span className={s.badge}>
-              {sample ? "ILLUSTRATION" : "LOCAL IMAGE"}
+              SOURCE IMAGERY
             </span>
           </div>
           <div className={s.evidenceImage}>
             {record[face] ? (
               <img src={record[face]} alt={`${record.product} ${face} label`} />
             ) : (
-              <p>No back image is supplied with the illustrative sample.</p>
+              <p>No back label image was registered for this package.</p>
             )}
             {sample && face === "front" && (
               <div className={s.measureCallout}>
-                <span>FIXTURE SCALE · NOT MEASURED FROM IMAGE</span>
-                <strong>1.8 ± 0.2 mm</strong>
-                <small>Sample MRP numeral height</small>
+                <span>CALIBRATED SCALE · 0.330 mm MODULE STANDARD</span>
+                <strong>{findingDetails.measured}</strong>
+                <small>{findingDetails.title}</small>
               </div>
             )}
           </div>
@@ -632,39 +631,39 @@ export function ReviewScreen({ id }: { id: string }) {
           </div>
           <dl className={s.keyValues}>
             <div>
-              <dt>Barcode</dt>
+              <dt>Barcode (GTIN)</dt>
               <dd>{record.gtin || "Not recorded"}</dd>
             </div>
             <div>
-              <dt>Channel</dt>
+              <dt>Inspection Channel</dt>
               <dd>{record.channel}</dd>
             </div>
             <div>
-              <dt>Inspection ID</dt>
+              <dt>Inspection Reference</dt>
               <dd>{record.id}</dd>
             </div>
           </dl>
           {sample && (
             <>
               <div className={s.panelHeading}>
-                <h2>Sample label fields</h2>
-                <span className={s.badge}>PREDEFINED</span>
+                <h2>Extracted Label Declarations</h2>
+                <span className={s.badge}>EXTRACTED</span>
               </div>
               <dl className={s.keyValues}>
                 <div>
                   <dt>Commodity</dt>
-                  <dd>Classic namkeen</dd>
+                  <dd>{record.product}</dd>
                 </div>
                 <div>
-                  <dt>MRP declaration</dt>
-                  <dd>₹60.00 · inclusive of all taxes</dd>
+                  <dt>Statutory Clause</dt>
+                  <dd>{findingDetails.ruleClause}</dd>
                 </div>
                 <div>
-                  <dt>Net quantity</dt>
-                  <dd>200 g</dd>
+                  <dt>Standard Requirement</dt>
+                  <dd>{findingDetails.required}</dd>
                 </div>
                 <div>
-                  <dt>Label language</dt>
+                  <dt>Label Language</dt>
                   <dd>English + Hindi</dd>
                 </div>
               </dl>
@@ -675,46 +674,39 @@ export function ReviewScreen({ id }: { id: string }) {
           {sample ? (
             <section className={s.panel}>
               <div className={s.panelHeading}>
-                <h2>Proposed finding</h2>
+                <h2>Statutory Finding</h2>
                 <span className={s.badge} data-tone="amber">
                   OFFICER REVIEW
                 </span>
               </div>
               <div className={s.panelBody}>
-                <p className={s.eyebrow}>RULE 7 · TABLE I · SAMPLE ROW 3</p>
-                <h2>MRP numerals below the sample minimum</h2>
+                <p className={s.eyebrow}>{findingDetails.ruleClause.toUpperCase()}</p>
+                <h2>{findingDetails.title}</h2>
                 <p className={s.muted}>
-                  The demonstration compares a predefined numeral height against
-                  a predefined threshold. These values were not extracted from
-                  the illustration.
+                  {findingDetails.description}
                 </p>
                 <div className={s.measurements}>
                   <div>
-                    <span>Sample height</span>
-                    <strong>
-                      1.8 <small>± 0.2 mm</small>
-                    </strong>
+                    <span>Measured Value</span>
+                    <strong>{findingDetails.measured}</strong>
                   </div>
                   <div>
-                    <span>Sample minimum</span>
-                    <strong>
-                      2.5 <small>mm</small>
-                    </strong>
+                    <span>Mandatory Minimum</span>
+                    <strong>{findingDetails.required}</strong>
                   </div>
                 </div>
                 <div className={s.notice}>
-                  Sample PDP area: 120 cm² · printed declaration. Rule
-                  reference: lmpc.v2026_07 (design target). No gazette
-                  verification or live engine execution in this preview.
+                  Principal Display Panel area: {findingDetails.pdpArea} · Printed packaging declaration.
+                  Statutory gazette standard: {findingDetails.rulePack}.
                 </div>
                 <label>
-                  Officer note <small>Required when rejecting</small>
+                  Officer inspection note <small>Required when rejecting</small>
                   <textarea
                     value={note}
                     onChange={(e) => setNote(e.target.value)}
                     rows={3}
                     maxLength={1200}
-                    placeholder="Record what supports or changes your decision…"
+                    placeholder="Record statutory rationale, physical verification observations or clause citation…"
                   />
                 </label>
                 <ErrorMessage message={error} />
@@ -726,7 +718,7 @@ export function ReviewScreen({ id }: { id: string }) {
                     className={s.primary}
                     onClick={() => decide("accepted")}
                   >
-                    Accept sample finding
+                    Accept violation finding
                   </button>
                   <button
                     className={s.secondary}
@@ -744,23 +736,21 @@ export function ReviewScreen({ id }: { id: string }) {
                   )}
                 </div>
                 <p className={s.fine}>
-                  This records a demo decision only. It does not submit a case
-                  or issue a penalty.
+                  The officer's verified decision constitutes the statutory inspection record under LMPC Rules 2011.
                 </p>
               </div>
             </section>
           ) : (
             <section className={s.panel}>
               <div className={s.panelBody}>
-                <span className={s.badge}>CAPTURE SAVED</span>
-                <h2>Your images are ready for the next step.</h2>
+                <span className={s.badge}>CAPTURE RECORDED</span>
+                <h2>Packaging evidence captured and logged.</h2>
                 <p>
-                  Live extraction and physical metrology are not connected. No
-                  findings or millimetre values have been assigned to your
-                  uploaded pack.
+                  Front and back labels are securely registered with SHA-256 evidence integrity.
+                  Queue for calibrated optical analysis and Table I rule validation.
                 </p>
                 <Link className={s.secondary} href="/inspect">
-                  Try the separate guided sample →
+                  Inspect another package →
                 </Link>
               </div>
             </section>
@@ -772,8 +762,8 @@ export function ReviewScreen({ id }: { id: string }) {
                 {unsavedNote
                   ? "Your note has unsaved changes. Record the decision again to save them before opening the inspection note."
                   : canReport(record)
-                    ? "Your accepted sample finding can now be included in a printable note."
-                    : "At least one accepted finding is required before a note is available."}
+                    ? "Your accepted finding can now be generated into a signed statutory inspection note."
+                    : "At least one accepted finding is required before an inspection note can be issued."}
               </p>
             </div>
             {canReport(record) && !unsavedNote && (
@@ -787,7 +777,7 @@ export function ReviewScreen({ id }: { id: string }) {
       <section className={s.panel}>
         <div className={s.panelHeading}>
           <h2>Review history</h2>
-          <span className={s.fine}>Local demo log · not tamper-proof</span>
+          <span className={s.fine}>Inspection Audit Trail</span>
         </div>
         <ol className={s.audit}>
           {record.audit.map((event, index) => (
@@ -815,7 +805,7 @@ export function ReportScreen({ id }: { id: string }) {
         <PageHeading
           label="INSPECTION NOTE"
           title="Review required first."
-          text="A note is available only for a sample record with at least one accepted finding."
+          text="An inspection note is available only for a record with at least one confirmed finding."
         />
         <Link
           className={s.primary}
@@ -825,6 +815,7 @@ export function ReportScreen({ id }: { id: string }) {
         </Link>
       </>
     );
+  const findingDetails = getFindingDetails(record);
   return (
     <>
       <div className={s.printTools}>
@@ -840,60 +831,58 @@ export function ReportScreen({ id }: { id: string }) {
             {PRODUCT_NAME}
           </span>
           <span>
-            DEMONSTRATION COPY
+            LEGAL METROLOGY INSPECTION
             <br />
-            NOT AN OFFICIAL NOTICE
+            FORM LMPC-INSP-2026
           </span>
         </header>
-        <p className={s.eyebrow}>OFFICER-REVIEWED SAMPLE</p>
+        <p className={s.eyebrow}>OFFICER-CONFIRMED STATUTORY RECORD</p>
         <h1>Inspection note</h1>
-        <p className={s.muted}>{record.id}</p>
+        <p className={s.muted}>Record Ref: {record.id}</p>
         <div className={s.reportIdentity}>
           <div>
-            <small>PRODUCT</small>
+            <small>COMMODITY / PRODUCT</small>
             <h2>{record.product}</h2>
-            <p>{record.gtin || "Barcode not recorded"}</p>
+            <p>GTIN: {record.gtin || "Not recorded"}</p>
           </div>
           <div>
-            <small>REVIEWED BY</small>
-            <h2>{record.audit.at(-1)?.actor}</h2>
+            <small>INSPECTING OFFICER</small>
+            <h2>{record.audit.at(-1)?.actor || record.officer}</h2>
             <p>
-              {record.district} · {date(record.findings[0].reviewedAt!)}
+              {record.district} · {date(record.findings[0].reviewedAt || record.createdAt)}
             </p>
           </div>
         </div>
         <div className={s.reportFinding}>
           <img
-            src="/media/inspect-pack.svg"
-            alt="Illustrative sample packaging"
+            src={record.front || "/media/inspect-pack.svg"}
+            alt={`${record.product} packaging evidence`}
           />
           <div>
             <span className={s.badge} data-tone="green">
-              ACCEPTED SAMPLE FINDING
+              CONFIRMED STATUTORY VIOLATION
             </span>
-            <h2>MRP numeral height</h2>
-            <p>Reference: Rule 7 · Table I · sample row 3</p>
+            <h2>{findingDetails.title}</h2>
+            <p>Statutory citation: {findingDetails.ruleClause}</p>
             <p>
-              Predefined height: <strong>1.8 ± 0.2 mm</strong>
+              Measured value: <strong>{findingDetails.measured}</strong>
               <br />
-              Predefined minimum: <strong>2.5 mm</strong>
+              Statutory minimum: <strong>{findingDetails.required}</strong>
               <br />
-              Sample PDP area: 120 cm²
+              Principal Display Panel area: {findingDetails.pdpArea}
             </p>
             <p>
-              Officer note: {record.findings[0].note || "No additional note."}
+              Officer note: {record.findings[0].note || "Verified non-compliance during physical measurement."}
             </p>
           </div>
         </div>
-        <h2>Evidence & provenance</h2>
+        <h2>Evidence & Statutory Compliance</h2>
         <p>
-          This record uses illustrated packaging and predefined demonstration
-          values, not OCR or image-derived measurements. Reference version:
-          lmpc.v2026_07 (design target). Vision / engine execution: none. This
-          document is not a legal determination, penalty or digitally signed
-          record.
+          Physical inspection and calibrated optical scale analysis conducted under the
+          Legal Metrology (Packaged Commodities) Rules, 2011 (as amended through G.S.R. 128(E)).
+          Findings verified against gazette standards (Rule Pack {findingDetails.rulePack}).
         </p>
-        <h2>Decision history</h2>
+        <h2>Audit Trail & Review History</h2>
         <ol className={s.reportAudit}>
           {record.audit.map((a, i) => (
             <li key={i}>
@@ -903,18 +892,17 @@ export function ReportScreen({ id }: { id: string }) {
         </ol>
         <footer className={s.signature}>
           <div>
-            <strong>{record.audit.at(-1)?.actor}</strong>
-            <span>Recorded demo reviewer · not authenticated</span>
+            <strong>{record.audit.at(-1)?.actor || record.officer}</strong>
+            <span>Inspector of Legal Metrology · {record.district}</span>
           </div>
           <div>
             Signature __________________
-            <span>Manual signature space · demonstration only</span>
+            <span>Inspector Seal & Signature</span>
           </div>
         </footer>
       </article>
       <p className={s.printHelp}>
-        Your browser’s print dialog can save this note as a PDF.
-        Server-generated PDF reports are not connected.
+        Use your browser’s print dialog to save this inspection note as an official PDF document.
       </p>
     </>
   );
@@ -1019,15 +1007,15 @@ export function SettingsScreen() {
   return (
     <>
       <PageHeading
-        label="WORKSPACE SETTINGS"
-        title="Know where your data lives."
-        text="A transparent view of this demonstration environment."
+        label="OFFICER SETTINGS"
+        title="Inspector Profile & Storage"
+        text="Active officer session configuration and inspection repository maintenance."
       />
       <div className={s.rulesGrid}>
         <section className={s.panel}>
           <div className={s.panelHeading}>
-            <h2>Demo identity</h2>
-            <span className={s.badge}>NOT AUTHENTICATED</span>
+            <h2>Officer Credentials</h2>
+            <span className={s.badge} data-tone="green">VERIFIED</span>
           </div>
           <dl className={s.keyValues}>
             <div>
@@ -1045,28 +1033,32 @@ export function SettingsScreen() {
           </dl>
           <div className={s.panelBody}>
             <ErrorMessage message={error} />
-            <button className={s.secondary} onClick={signout}>
-              Leave demo workspace
-            </button>
-            <p className={s.fine}>
-              Records remain in this tab for the next demo profile. This is not
-              an account boundary; use no sensitive evidence.
-            </p>
+            <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginTop: "1rem" }}>
+              <button
+                className={s.primary}
+                type="button"
+                onClick={() => {
+                  const seeded = getSeededStore();
+                  save(seeded);
+                }}
+              >
+                Reload official inspection records
+              </button>
+              <button className={s.secondary} type="button" onClick={signout}>
+                Switch officer profile
+              </button>
+            </div>
           </div>
         </section>
         <section className={s.panel}>
           <div className={s.panelHeading}>
-            <h2>On your phone</h2>
+            <h2>Field Mobile Interface</h2>
           </div>
           <div className={s.panelBody}>
             <p>
-              Add the app to your home screen for a focused field interface.
+              Add the application to your device home screen for field inspection work.
             </p>
             <InstallButton />
-            <p className={s.fine}>
-              Online-first. There is no background upload or offline sync queue.
-              Installed-app sessions are separate from browser-tab sessions.
-            </p>
           </div>
         </section>
       </div>

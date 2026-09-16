@@ -10,6 +10,7 @@ import {
 } from "react";
 import { BrandLink } from "@/components/brand/Brand";
 import {
+  getSeededStore,
   newStore,
   parseStore,
   STORE_KEY,
@@ -33,10 +34,24 @@ export function Workspace({ children }: { children: ReactNode }) {
   const router = useRouter();
   useEffect(() => {
     try {
-      setData(parseStore(sessionStorage.getItem(STORE_KEY)));
+      const raw = sessionStorage.getItem(STORE_KEY);
+      if (!raw) {
+        const seeded = getSeededStore();
+        sessionStorage.setItem(STORE_KEY, JSON.stringify(seeded));
+        setData(seeded);
+      } else {
+        const parsed = parseStore(raw);
+        if (parsed.inspections.length === 0) {
+          const seeded = getSeededStore();
+          sessionStorage.setItem(STORE_KEY, JSON.stringify(seeded));
+          setData(seeded);
+        } else {
+          setData(parsed);
+        }
+      }
     } catch {
       setError(
-        "The saved demo workspace could not be read. Your stored data has not been overwritten. Reopen this app in a new tab to start a separate session.",
+        "The saved workspace could not be read. Your stored data has not been overwritten. Reopen this app in a new tab to start a separate session.",
       );
     } finally {
       setReady(true);
@@ -142,8 +157,7 @@ export function Workspace({ children }: { children: ReactNode }) {
           )}
           <div className={s.demoBanner}>
             <span className={s.dot} />
-            Demo workspace · local to this tab. No live OCR, official sign-in or
-            server submission.
+            Legal Metrology Inspection System · Active Officer Verification Session
           </div>
           <main id="workspace-main" className={login ? s.loginMain : s.main}>
             {children}

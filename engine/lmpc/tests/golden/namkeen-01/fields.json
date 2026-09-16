@@ -1,0 +1,72 @@
+{
+  "mrp": {
+    "present": true,
+    "raw": "MRP ₹60.00 (INCL. OF ALL TAXES)",
+    "confidence": 0.98,
+    "bbox_px": [120, 340, 180, 520],
+    "value_inr": 60.0,
+    "incl_all_taxes": true
+  },
+  "net_qty": {
+    "present": true,
+    "raw": "Net Quantity: 200 g",
+    "confidence": 0.99,
+    "bbox_px": [200, 340, 240, 480],
+    "value": 200.0,
+    "unit": "g"
+  },
+  "usp": {
+    "present": true,
+    "raw": "Unit Sale Price: ₹0.30 / g",
+    "confidence": 0.95,
+    "bbox_px": [250, 340, 280, 500],
+    "inr_per": 0.3,
+    "unit": "g"
+  },
+  "packer": {
+    "present": true,
+    "raw": "Manufactured & Packed by: Haldiram Foods International Pvt. Ltd., 145/146, Old Pardi Naka, Bhandara Road, Nagpur - 440035, Maharashtra",
+    "confidence": 0.97,
+    "bbox_px": [400, 50, 520, 750]
+  },
+  "importer": {
+    "present": false,
+    "raw": null,
+    "confidence": 1.0,
+    "bbox_px": null
+  },
+  "coo": {
+    "present": true,
+    "raw": "Country of Origin: India",
+    "confidence": 0.99,
+    "bbox_px": [530, 50, 560, 350]
+  },
+  "date": {
+    "present": true,
+    "raw": "Mfg Date: 08/2026",
+    "confidence": 0.96,
+    "bbox_px": [570, 50, 600, 300],
+    "month": 8,
+    "year": 2026
+  },
+  "consumer_care": {
+    "present": true,
+    "raw": "Customer Care: Haldiram Foods, Tel: +91-712-2779401, Email: feedback@haldirams.com",
+    "confidence": 0.98,
+    "bbox_px": [610, 50, 660, 750],
+    "phone": "+91-712-2779401",
+    "email": "feedback@haldirams.com"
+  },
+  "generic_name": {
+    "present": true,
+    "raw": "Bhujia Sev - Spiced Gram Flour Extruded Snack",
+    "confidence": 0.99,
+    "bbox_px": [80, 100, 130, 650]
+  },
+  "language": {
+    "scripts": ["Deva", "Latn"],
+    "present_hi_or_en": true,
+    "confidence": 0.99
+  },
+  "listing_ui": null
+}

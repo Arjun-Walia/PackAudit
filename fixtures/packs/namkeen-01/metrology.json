@@ -1,0 +1,52 @@
+{
+  "mm_per_px": 0.045,
+  "scale_method": "fixture",
+  "uncertainty_rel": 0.05,
+  "pdp_area_cm2": 120.0,
+  "pdp_area_uncertainty_cm2": 5.0,
+  "print_vs_blown": "print",
+  "targets": {
+    "mrp": {
+      "height_mm": 1.8,
+      "height_uncertainty_mm": 0.2,
+      "width_mm": 1.1,
+      "width_uncertainty_mm": 0.1,
+      "isolation_mm": {
+        "top": 2.5,
+        "bottom": 2.5,
+        "left": 3.0,
+        "right": 3.0
+      },
+      "contrast_ratio": 7.8,
+      "bbox_px": [120, 340, 180, 520]
+    },
+    "net_qty": {
+      "height_mm": 2.8,
+      "height_uncertainty_mm": 0.2,
+      "width_mm": 1.4,
+      "width_uncertainty_mm": 0.1,
+      "isolation_mm": {
+        "top": 3.0,
+        "bottom": 3.0,
+        "left": 3.0,
+        "right": 3.0
+      },
+      "contrast_ratio": 8.2,
+      "bbox_px": [200, 340, 240, 480]
+    },
+    "usp": {
+      "height_mm": 2.2,
+      "height_uncertainty_mm": 0.2,
+      "width_mm": 1.2,
+      "width_uncertainty_mm": 0.1,
+      "isolation_mm": {
+        "top": 2.0,
+        "bottom": 2.0,
+        "left": 2.0,
+        "right": 2.0
+      },
+      "contrast_ratio": 7.5,
+      "bbox_px": [250, 340, 280, 500]
+    }
+  }
+}
